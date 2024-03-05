@@ -1,0 +1,22 @@
+# ----- General ----- #
+*.log
+.DS_Store
+.DS_Store?
+.Spotlight-V100
+.Trashes
+.vscode
+ehthumbs.db
+Thumbs.db
+yarn-error.log
+/.idea
+/node_modules
+
+/build
+/artifacts
+config.yml
+/assets
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+perfTraces.json
