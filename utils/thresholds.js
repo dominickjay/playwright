@@ -1,6 +1,6 @@
 export const thresholds = {
-    performance: 80,
-    accessibility: 50,
+    performance: 90,
+    accessibility: 90,
     'best-practices': 50,
     seo: 50
 }

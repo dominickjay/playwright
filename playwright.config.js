@@ -37,41 +37,82 @@ module.exports = defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      name: 'Chrome Stable',
+      use: {
+        browserName: 'chromium',
+        // channel: 'chrome',
+        fullyParallel: true,
+      },
     },
-
     {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+      name: 'Safari MacBook Air',
+      use: {
+        browserName: 'webkit',
+        viewport: {
+          width: 2560,
+          height: 1620,
+        },
+      },
     },
-
     {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      name: 'Firefox Desktop',
+      use: {
+        browserName: 'firefox',
+        viewport: {
+          width: 1920,
+          height: 1080,
+        },
+      },
     },
-
-    /* Test against mobile viewports. */
-    // {
-    //   name: 'Mobile Chrome',
-    //   use: { ...devices['Pixel 5'] },
-    // },
-    // {
-    //   name: 'Mobile Safari',
-    //   use: { ...devices['iPhone 12'] },
-    // },
-
-    /* Test against branded browsers. */
-    // {
-    //   name: 'Microsoft Edge',
-    //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
-    // },
-    // {
-    //   name: 'Google Chrome',
-    //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
-    // },
-  ],
-
+    {
+      name: 'iPhone 6/7/8',
+      use: devices['iPhone 8'],
+    },
+    {
+      name: 'iPhone 6/7/8 Plus',
+      use: devices['iPhone 8 Plus'],
+    },
+    {
+      name: 'iPhone 12',
+      use: devices['iPhone 12'],
+    },
+    {
+      name: 'iPhone 12 Pro',
+      use: devices['iPhone 12 Pro'],
+    },
+    {
+      name: 'iPhone 12 Pro Max',
+      use: devices['iPhone 12 Pro Max'],
+    },
+    {
+      name: 'iPhone 5/SE',
+      use: devices['iPhone SE'],
+    },
+    {
+      name: 'iPad',
+      use: devices['iPad (gen 7)'],
+    },
+    {
+      name: 'iPad landscape',
+      use: devices['iPad (gen 7) landscape'],
+    },
+    {
+      name: 'iPad Mini',
+      use: devices['iPad Mini'],
+    },
+    {
+      name: 'iPad Mini landscape',
+      use: devices['iPad Mini landscape'],
+    },
+    {
+      name: 'iPad Pro 11',
+      use: devices['iPad Pro 11'],
+    },
+    {
+      name: 'iPad Pro 11 landscape',
+      use: devices['iPad Pro 11 landscape'],
+    },
+  ]
   /* Run your local dev server before starting the tests */
   // webServer: {
   //   command: 'npm run start',
