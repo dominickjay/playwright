@@ -18,10 +18,8 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
-      run: echo "NOW=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
       run: npm run accessibility
       with:
-        name: lighthouse-$NOW
-        path: |
-          build
+        name: accessibilityReport
+        path: artifacts/
         retention-days: 30
