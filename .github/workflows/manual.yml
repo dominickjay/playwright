@@ -19,6 +19,7 @@ jobs:
       run: npx playwright install --with-deps
     - name: Run Playwright tests
       run: npm run accessibility
+    - uses: actions/upload-artifact@v4
       with:
         name: accessibilityReport
         path: artifacts/
