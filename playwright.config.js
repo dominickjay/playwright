@@ -65,52 +65,12 @@ module.exports = defineConfig({
       },
     },
     {
-      name: 'iPhone 6/7/8',
-      use: devices['iPhone 8'],
-    },
-    {
-      name: 'iPhone 6/7/8 Plus',
-      use: devices['iPhone 8 Plus'],
-    },
-    {
       name: 'iPhone 12',
       use: devices['iPhone 12'],
     },
     {
-      name: 'iPhone 12 Pro',
-      use: devices['iPhone 12 Pro'],
-    },
-    {
-      name: 'iPhone 12 Pro Max',
-      use: devices['iPhone 12 Pro Max'],
-    },
-    {
-      name: 'iPhone 5/SE',
-      use: devices['iPhone SE'],
-    },
-    {
       name: 'iPad',
       use: devices['iPad (gen 7)'],
-    },
-    {
-      name: 'iPad landscape',
-      use: devices['iPad (gen 7) landscape'],
-    },
-    {
-      name: 'iPad Mini',
-      use: devices['iPad Mini'],
-    },
-    {
-      name: 'iPad Mini landscape',
-      use: devices['iPad Mini landscape'],
-    },
-    {
-      name: 'iPad Pro 11',
-      use: devices['iPad Pro 11'],
-    },
-    {
-      name: 'iPad Pro 11 landscape',
-      use: devices['iPad Pro 11 landscape'],
     },
   ]
   /* Run your local dev server before starting the tests */

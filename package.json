@@ -4,16 +4,22 @@
   "license": "MIT",
   "description": "Project for playwright setup",
   "version": "1.0.0",
-	"scripts": {
-		"accessibility": "npx playwright test lighthouse.spec.js --project='Chrome Stable' --workers 1"
-	},
+  "scripts": {
+    "clean": "rimraf build",
+    "tests": "npm run clean && npx playwright test",
+    "lighthouse": "npm run clean && npx playwright test lighthouse.spec.js --project='Chrome Stable' --workers 1",
+    "axe": "npm run clean && npx playwright test accessibility.spec.js --project='Chrome Stable' --workers 1"
+  },
   "dependencies": {
     "@axe-core/playwright": "^4.8.4",
     "axe-html-reporter": "^2.2.3",
     "chrome-launcher": "^1.1.0",
     "lighthouse": "9.6.8",
     "node-fetch": "^2.6.1",
-    "playwright-lighthouse": "2.2.2"
+    "npm-run-all": "^4.1.5",
+    "playwright-lighthouse": "2.2.2",
+    "rimraf": "^5.0.7",
+    "run-s": "^0.0.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.41.2",
