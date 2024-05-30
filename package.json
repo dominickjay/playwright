@@ -4,6 +4,9 @@
   "license": "MIT",
   "description": "Project for playwright setup",
   "version": "1.0.0",
+	"scripts": {
+		"accessibility": "npx playwright test lighthouse.spec.js --project='Chrome Stable' --workers 1"
+	},
   "dependencies": {
     "@axe-core/playwright": "^4.8.4",
     "axe-html-reporter": "^2.2.3",
