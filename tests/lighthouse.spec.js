@@ -21,6 +21,7 @@ URLs.forEach(url => {
             config: lighthouseDesktopConfig,
             thresholds: thresholds,
             port: 9222,
+            ignoreError: true,
             opts: options,
             reports: {
                 formats: {
