@@ -6,7 +6,7 @@
   "version": "1.0.0",
   "scripts": {
     "clean": "rimraf build",
-    "tests": "npm run clean && npx playwright test",
+    "tests": "npm run clean && npx playwright test --project='Chrome Stable' --workers 1",
     "lighthouse": "npm run clean && npx playwright test lighthouse.spec.js --project='Chrome Stable' --workers 1",
     "axe": "npm run clean && npx playwright test accessibility.spec.js --project='Chrome Stable' --workers 1"
   },
