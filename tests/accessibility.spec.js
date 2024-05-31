@@ -23,12 +23,12 @@ URLs.forEach(url => {
             },
         });
 
-        if (!fs.existsSync(`build/reports/accessibility/axe-report-${new Date().toISOString()}.html`)) {
-            fs.mkdirSync("build/reports/accessibility/", {
+        if (!fs.existsSync(`build/reports/accessibility/axe/report-${new Date().toISOString()}.html`)) {
+            fs.mkdirSync("build/reports/accessibility/axe/", {
                 recursive: true,
             });
         }
-        fs.writeFileSync(`build/reports/accessibility/axe-report-${new Date().toISOString()}.html`, reportHTML);
+        fs.writeFileSync(`build/reports/accessibility/axe/report-${new Date().toISOString()}.html`, reportHTML);
 
     });
 });

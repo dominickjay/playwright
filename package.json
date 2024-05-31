@@ -32,7 +32,7 @@
     "laravel-mix-copy-watched": "^2.3.1",
     "laravel-mix-merge-manifest": "^2.0.0",
     "laravel-mix-tailwind": "^0.1.2",
-    "playwright-performance": "^1.0.0",
+    "playwright-performance": "^1.0.2",
     "postcss": "^8.4.6",
     "postcss-import": "^14.0.2",
     "postcss-nested": "^5.0.6",

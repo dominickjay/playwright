@@ -1,6 +1,5 @@
 const { playAudit } = require('playwright-lighthouse');
 const { test, chromium } = require('@playwright/test');
-const lighthouseDesktopConfig = require('lighthouse/lighthouse-core/config/lr-desktop-config');
 const { URLs } = require("../utils/urls.json");
 const { thresholds } = require('../utils/thresholds');
 
@@ -8,17 +7,21 @@ const options = {
     loglevel: "info",
 }
 
+test.describe.configure({ mode: 'serial' });
+
 URLs.forEach(url => {
-    test(`Lighthouse performance test for ${url}`, async () => {
+    test(`Lighthouse accessibility test for ${url}`, async () => {
+
         const browser = await chromium.launch({
             args: ['--remote-debugging-port=9222'],
             headless: true
         });
+
         const page = await browser.newPage();
         await page.goto(url);
+
         await playAudit({
             page: page,
-            config: lighthouseDesktopConfig,
             thresholds: thresholds,
             port: 9222,
             ignoreError: true,
@@ -27,8 +30,8 @@ URLs.forEach(url => {
                 formats: {
                     html: true, //defaults to false
                 },
-                name: `lighthouse-${new Date().toISOString()}`, //defaults to `lighthouse-${new Date().getTime()}`
-                directory: `${process.cwd()}/build`, //defaults to `${process.cwd()}/lighthouse`
+                name: `report-${new Date().toISOString()}`, //defaults to `lighthouse-${new Date().getTime()}`
+                directory: `build/reports/accessibility/lighthouse/`, //defaults to `${process.cwd()}/lighthouse`
             },
         });
         await page.close();

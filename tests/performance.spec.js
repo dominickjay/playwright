@@ -1,64 +1,86 @@
-const { test, TestInfo } = require('@playwright/test');
-const { chromium } = require('playwright')
+const { playAudit } = require('playwright-lighthouse');
+const { test, chromium } = require('@playwright/test');
+const { URLs } = require("../utils/urls.json");
 
-test("Capture performance traces by marking actions using Performance API", async ({ page, browser }) => {
-  console.log("========== Start Tracing Perf ===========")
-  await browser.startTracing(page, { path: './perfTraces.json', screenshots: true })
-  await page.goto('/');
-  //Using Performanc.mark API
-  await page.evaluate(() => (window.performance.mark('Perf:Started')))
-  await page.locator('h1')
+const options = {
+		loglevel: "info",
+}
 
-  //Using performance.mark API
-  await page.evaluate(() => (window.performance.mark('Perf:Ended')))
+test.describe.configure({ mode: 'serial' });
 
-  //Performance measure
-  await page.evaluate(() => (window.performance.measure("overall", "Perf:Started", "Perf:Ended")))
+URLs.forEach(url => {
 
-  //To get all performance marks
-  const getAllMarksJson = await page.evaluate(() => (JSON.stringify(window.performance.getEntriesByType("mark"))))
-  const getAllMarks = await JSON.parse(getAllMarksJson)
-  console.log('window.performance.getEntriesByType("mark")', getAllMarks)
+	test(`Use Performance API to measure performance for ${url}`, async ({}, TestInfo) => {
 
-  //To get all performance measures of Google
-  const getAllMeasuresJson = await page.evaluate(() => (JSON.stringify(window.performance.getEntriesByType("measure"))))
-  const getAllMeasures = await JSON.parse(getAllMeasuresJson)
-  console.log('window.performance.getEntriesByType("measure")', getAllMeasures)
-  console.log("======= Stop Tracing ============")
-  await browser.stopTracing()
-})
+		const browser = await chromium.launch({
+				args: ['--remote-debugging-port=9222'],
+				headless: true
+		});
 
-test("Capture resource timing by marking actions using Performance API", async ({page}) => {
+		const page = await browser.newPage();
+			await page.goto(url);
+			await test.slow()
 
-  // const { chromium } = require('playwright')
-  const browser = await chromium.launch()
-  await page.goto('/')
+			const [performanceTiming] = await page.evaluate(() => {
+				const [timing] = performance.getEntriesByType('navigation');
+				return [timing];
+			});
+			// Get the start to load event end time
+			const startToLoadEventEnd = performanceTiming.loadEventEnd - performanceTiming.startTime;
 
-  const resourceTimingJson = await page.evaluate(() =>
-    JSON.stringify(window.performance.getEntriesByType('resource'))
-  )
+			// Add the performance annotation to the HTML report
+			test.info().annotations.push({ type: 'Performance', description: `"${TestInfo.project.name}" - Navigation start to load event end: ${startToLoadEventEnd}ms` });
+		});
 
-  const resourceTiming = JSON.parse(resourceTimingJson)
-  const logoResourceTiming = resourceTiming.find((element) =>
-    element.name.includes('.png')
-  )
+	test(`Simulate slow network connection for ${url}`, async () => {
 
-  console.log(logoResourceTiming)
+		const browser = await chromium.launch({
+			args: ['--remote-debugging-port=9222'],
+			headless: true
+		});
 
-  await browser.close()
-})
+		const page = await browser.newPage();
 
-test("Capture paint by marking actions using Performance API", async ({page}) => {
+		const client = await page.context().newCDPSession(page);
+		await client.send('Network.enable');
+		await client.send('Network.emulateNetworkConditions', {
+			offline: false,
+			downloadThroughput: (2 * 1024 * 1024) / 4,
+			uploadThroughput: (3 * 1024 * 1024) / 4,
+			connectionType: 'cellular2g',
+			latency: 10,
+		});
+		await page.goto(url);
+	});
 
-  const browser = await chromium.launch()
-  await page.goto('/')
+	// test(`Run Lighthouse Performance Audit for ${url}`, async () => {
 
-  const paintTimingJson = await page.evaluate(() =>
-    JSON.stringify(window.performance.getEntriesByType('paint'))
-  )
-  const paintTiming = JSON.parse(paintTimingJson)
+	//   const browser = await chromium.launch({
+	//     args: ['--remote-debugging-port=9222'],
+	//     headless: true
+	//   });
 
-  console.log(paintTiming)
+	//   const page = await browser.newPage();
+	//   await page.goto(url);
 
-  await browser.close()
-})
+	//   await playAudit({
+	//     page: page,
+	//     thresholds: {
+	//       performance: 90,
+	//     },
+	//     port: 9222,
+	//     ignoreError: true,
+	//     opts: options,
+	//     reports: {
+	//       formats: {
+	//         html: true,
+	//       },
+	//       name: `report-${new Date().toISOString()}`, //defaults to `lighthouse-${new Date().getTime()}`
+	//       directory: `build/reports/performance/lighthouse/`
+	//     },
+	//   });
+
+	//   await page.close();
+	//   await browser.close();
+	// });
+});
