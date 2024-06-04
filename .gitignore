@@ -20,3 +20,5 @@ config.yml
 /blob-report/
 /playwright/.cache/
 perfTraces.json
+
+.env

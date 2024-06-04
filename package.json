@@ -1,8 +1,8 @@
 {
-  "name": "playwright",
+  "name": "s8-playwright",
   "repository": "",
   "license": "MIT",
-  "description": "Project for playwright setup",
+  "description": "Project for series eight playwright setup",
   "version": "1.0.0",
   "scripts": {
     "clean": "rimraf build",
