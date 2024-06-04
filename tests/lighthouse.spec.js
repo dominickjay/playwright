@@ -20,7 +20,7 @@ URLs.forEach(url => {
         const page = await browser.newPage();
         await page.goto(url);
 
-        await playAudit({
+        const results = await playAudit({
             page: page,
             thresholds: thresholds,
             port: 9222,
@@ -34,6 +34,25 @@ URLs.forEach(url => {
                 directory: `build/reports/accessibility/lighthouse/`, //defaults to `${process.cwd()}/lighthouse`
             },
         });
+
+        const resultArray = results.lhr.categories;
+
+        if (resultArray['performance'].score * 100 < thresholds['performance']) {
+            console.log(`performance failed - score is ${resultArray['performance'].score * 100}, threshold is ${thresholds['performance']}`);
+        }
+
+        if (resultArray['accessibility'].score * 100 < thresholds['accessibility']) {
+            console.log(`accessibility failed - score is ${resultArray['accessibility'].score * 100}, threshold is ${thresholds['accessibility']}`);
+        }
+
+        if (resultArray['best-practices'].score * 100 < thresholds['best-practices']) {
+            console.log(`best-practices failed - score is ${resultArray['best-practices'].score * 100}, threshold is ${thresholds['best-practices']}`);
+        }
+
+        if (resultArray['seo'].score * 100 < thresholds['seo']) {
+            console.log(`seo failed - score is ${resultArray['seo'].score * 100}, threshold is ${thresholds['seo']}`);
+        }
+
         await page.close();
         await browser.close();
     })

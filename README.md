@@ -1,16 +1,24 @@
 # Playwright
 
+## Setup
+
 Before running tests, please run `npm i` and `npx playwright install`
+
+## Tests
+
+## All Tests
+
+Run `npm run tests`
 
 ### Performance Tests
 
-Run `npx playwright test performance.spec.js --ui`
+Run `npm run performance`
 
 ### Accessibility Tests
 
-Run `npx playwright test accessibility.spec.js`
-Run `npx playwright test lighthouse.spec.js --project='Chrome Stable' --workers 1`
+Run `npm run accessibility`
+Run `npm run lighthouse`
 
-### UI Tests
+### To Do
 
-Run `npx playwright test ui.spec.js --ui`
+- look into testing local urls for Valet
